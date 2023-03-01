@@ -1,5 +1,5 @@
 chunks = [] # empty list to store discussion chunks
-chunk = [] # an empty discussion chunk
+chunk = []
 start = False # a flag to indicate if a chunk has started
 
 with open("daily_discussion_april_12.txt", mode="r", encoding="utf-8") as file:
@@ -48,15 +48,14 @@ for chunk in chunks:
     while i < len(chunk) and not chunk[i].startswith('Reply'):
         text += chunk[i]
         i += 1
-
-
+        
     # Add the user's comment to the dictionary of comments
     if username not in dic:
         dic[username] = []
     dic[username].append(text)
 
-print(list(users))
-print(list(users_with_multiple_posts))
+print(users)
+print(users_with_multiple_posts)
 
 mentions = [] # an empty list to store users who mentioned "cough", "cold", or "fever"
 
@@ -64,7 +63,7 @@ for user, comments in dic.items():
     for comment in comments:
         # If the comment mentions the words "cough", "cold", or "fever", add the user and all their comments to the list of mentions
         if "cough" in comment or "cold" in comment or 'fever' in comment:
-            mentions.append(user)
+            mentions.append([user, comments])
             break   
 
 print(mentions)
