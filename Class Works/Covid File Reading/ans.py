@@ -55,8 +55,8 @@ for chunk in chunks:
         dic[username] = []
     dic[username].append(text)
 
-print(users)
-print(users_with_multiple_posts)
+print(list(users))
+print(list(users_with_multiple_posts))
 
 mentions = [] # an empty list to store users who mentioned "cough", "cold", or "fever"
 
@@ -64,7 +64,7 @@ for user, comments in dic.items():
     for comment in comments:
         # If the comment mentions the words "cough", "cold", or "fever", add the user and all their comments to the list of mentions
         if "cough" in comment or "cold" in comment or 'fever' in comment:
-            mentions.append([user, comments])
+            mentions.append(user)
             break   
 
 print(mentions)
