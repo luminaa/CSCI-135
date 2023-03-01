@@ -2,7 +2,7 @@ chunks = [] # empty list to store discussion chunks
 chunk = [] # an empty discussion chunk
 start = False # a flag to indicate if a chunk has started
 
-with open("covid_data.txt", mode="r", encoding="utf-8") as file:
+with open("daily_discussion_april_12.txt", mode="r", encoding="utf-8") as file:
     for line in file:
 
         # If the line starts with "level" and no chunk has started yet
@@ -44,9 +44,11 @@ for chunk in chunks:
     # Extract the content of the chunk
     i = 5
     text = ""
-    while chunk[i] != 'Reply':
+
+    while i < len(chunk) and not chunk[i].startswith('Reply'):
         text += chunk[i]
         i += 1
+
 
     # Add the user's comment to the dictionary of comments
     if username not in dic:
