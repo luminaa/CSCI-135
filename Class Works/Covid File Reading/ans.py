@@ -1,69 +1,79 @@
-chunks = [] # empty list to store discussion chunks
-chunk = []
-start = False # a flag to indicate if a chunk has started
+def get_chunks_from_file(file_path):
+    chunks = []
+    chunk = []
+    start = False 
 
-with open("daily_discussion_april_12.txt", mode="r", encoding="utf-8") as file:
-    for line in file:
+    with open(file_path, mode="r", encoding="utf-8") as file:
+        for line in file:
+            if line.startswith("level"):
+                if chunk != []:
+                    chunks.append(chunk)
+                chunk = [line.strip()]
+                start = True
 
-        # If the line starts with "level" and no chunk has started yet
-        if line.startswith("level") and not start:  
-            # If there's a previous chunk, add it to the list of chunks
-            if chunk:
-                chunks.append(chunk)
-            # Start a new chunk with this line
-            chunk.append(line.strip())
-            start = True
+            elif start:
+                if line.strip() == "Comment deleted by user":
+                    chunk = []
+                    start = False
+                    continue
+                chunk.append(line.strip())
 
-        # If the line starts with "Reply" and a chunk has started
-        elif line.startswith("Reply") and start: 
-            # Add the current chunk to the list of chunks
-            chunks.append(chunk)
-            # Start a new empty chunk
-            chunk = []
-            start = False
-
-        # If a chunk has started, add the line to the current chunk
-        elif start:
-            chunk.append(line.strip())
+    return chunks
 
 
-dic = {} # an empty dictionary to store the comments of each user
-users_with_multiple_posts = set() # a set to store users who posted multiple comments
-users = set() # a set to store all users who posted comments
+def get_users_comments_from_chunks(chunks):
+    dic = {} 
+    users_with_multiple_posts = set() 
+    users = set() 
 
-for chunk in chunks:
+    for chunk in chunks:
 
-    # Extract the username of the user who wrote the chunk
-    username = chunk[1]
-    # If the user has already posted a comment before, add them to the set of users with multiple comments
-    if username in dic:
-        users_with_multiple_posts.add(username)
-    # Add the user to the set of all users who posted comments
-    users.add(username)
+        if not chunk:
+            continue
 
-    # Extract the content of the chunk
-    i = 5
-    text = ""
+        username = chunk[1]
 
-    while i < len(chunk) and not chunk[i].startswith('Reply'):
-        text += chunk[i]
-        i += 1
-        
-    # Add the user's comment to the dictionary of comments
-    if username not in dic:
-        dic[username] = []
-    dic[username].append(text)
+        if username in dic:
+            users_with_multiple_posts.add(username)
+
+        users.add(username)
+
+        i = 5
+        text = ""
+
+        while i < len(chunk) and not chunk[i].startswith('Reply'):
+            text += chunk[i]
+            i += 1
+
+        if username not in dic:
+            dic[username] = []
+        dic[username].append(text)
+
+    return dic, users, users_with_multiple_posts
+
+
+def get_mentions_with_cough_cold_fever(dic):
+    mentions = []
+
+    for user, comments in dic.items():
+        for comment in comments:
+            if "cough" in comment or "cold" in comment or 'fever' in comment:
+                mentions.append([user, comments])
+                break   
+
+    return mentions
+
+file_path = "daily_discussion_april_12.txt"
+
+# get the chunks from the file
+chunks = get_chunks_from_file(file_path)
+
+# get the users, comments, and users with multiple posts from the chunks
+dic, users, users_with_multiple_posts = get_users_comments_from_chunks(chunks)
+
+# get the users who mentioned "cough", "cold", or "fever"
+mentions = get_mentions_with_cough_cold_fever(dic)
 
 print(users)
-print(users_with_multiple_posts)
-
-mentions = [] # an empty list to store users who mentioned "cough", "cold", or "fever"
-
-for user, comments in dic.items():
-    for comment in comments:
-        # If the comment mentions the words "cough", "cold", or "fever", add the user and all their comments to the list of mentions
-        if "cough" in comment or "cold" in comment or 'fever' in comment:
-            mentions.append([user, comments])
-            break   
-
-print(mentions)
+print(len(users_with_multiple_posts))
+print(len(mentions))
