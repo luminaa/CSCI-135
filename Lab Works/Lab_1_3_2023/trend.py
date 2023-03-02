@@ -83,13 +83,26 @@ def get_mentions_with_cough_cold_fever(dic):
 
     return cough_mentions, cold_mentions, fever_mentions
 
-file_path = "daily_discussion_april_12.txt"
+base_path = "daily_discussion_april_"
+file_extension = ".txt"
 
-# Get the chunks from the file
-chunks = get_chunks_from_file(file_path)
+daily_posts = []
+daily_cough_posts = []
+daily_cold_posts = []
+daily_fever_posts = []
 
-# Get the users, comments, and users with multiple posts from the chunks
-dic, users, users_with_multiple_posts = get_users_comments_from_chunks(chunks)
+for day in range(12,19):
+    file_path = base_path + str(day) + file_extension
+    chunks = get_chunks_from_file(file_path)
+    dic, users, users_with_multiple_posts = get_users_comments_from_chunks(chunks)
+    cough_mentions, cold_mentions, fever_mentions = get_mentions_with_cough_cold_fever(dic)
 
-# Get the users who mentioned "cough", "cold", or "fever"
-cough_mentions, cold_mentions, fever_mentions = get_mentions_with_cough_cold_fever(dic)
+    daily_posts.append(len(chunks))
+    daily_cough_posts.append(len(cough_mentions))
+    daily_cold_posts.append(len(cold_mentions))
+    daily_fever_posts.append(len(fever_mentions))
+
+print(daily_posts)
+print(daily_cough_posts)
+print(daily_cold_posts)
+print(daily_fever_posts)
