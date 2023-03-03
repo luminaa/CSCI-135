@@ -2,7 +2,7 @@
 def get_chunks_from_file(file_path):
     chunks = []
     chunk = []
-    start = False 
+    start = False
 
     with open(file_path, mode="r", encoding="utf-8") as file:
         for line in file:
@@ -93,3 +93,7 @@ dic, users, users_with_multiple_posts = get_users_comments_from_chunks(chunks)
 
 # Get the users who mentioned "cough", "cold", or "fever"
 cough_mentions, cold_mentions, fever_mentions = get_mentions_with_cough_cold_fever(dic)
+
+print(len(users))
+print(len(users_with_multiple_posts))
+print(cough_mentions)    
