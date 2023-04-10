@@ -1,23 +1,23 @@
 class Node:
     def __init__(self, data):
-        self.data = data
-        self.next = None
+        self.data = data # data to be stored in the node
+        self.next = None # pointer to the next node in the list
 
 class LinkedList:
     def __init__(self):
-        self.head = None
+        self.head = None # pointer to the first node in the list
 
     def append(self, data):
-        new_node = Node(data)
-        if self.head is None:
+        new_node = Node(data) # create a new node with the given data
+        if self.head is None: # if the list is empty, make the new node the head
             self.head = new_node
         else:
             current_node = self.head
-            while current_node.next is not None:
+            while current_node.next is not None: # traverse the list to the end
                 current_node = current_node.next
-            current_node.next = new_node
+            current_node.next = new_node # set the new node as the next node of the last node
 
-    def __str__(self):
+    def __str__(self): # string representation of the list
         current_node = self.head
         string = ""
         while current_node is not None:
