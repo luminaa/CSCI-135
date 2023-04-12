@@ -26,7 +26,13 @@ class LinkedList:
             head = new_node
         else:
             head.next = self.insert(value, position-1, head.next)
-        return head 
+        return head
+    
+    def remove(self, position, head=None):
+        if position == 0:
+            self.head = self.head.next
+        else:
+            self.remove(position-1, self.head.next)
 
     def __str__(self): # string representation of the list
         current_node = self.head
@@ -46,5 +52,6 @@ days.append("Fri")
 days.append("Sat")
 days.append("Sun")
 days.insert("Fri", 4)
+days.remove(4)
 
 print(days)
