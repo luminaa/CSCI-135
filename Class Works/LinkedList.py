@@ -17,6 +17,17 @@ class LinkedList:
                 current_node = current_node.next
             current_node.next = new_node # set the new node as the next node of the last node
 
+    def insert(self, value, position, head=None):
+        if head is None:
+            head = self.head
+        if position == 0:
+            new_node = Node(value)
+            new_node.next = head
+            head = new_node
+        else:
+            head.next = self.insert(value, position-1, head.next)
+        return head 
+
     def __str__(self): # string representation of the list
         current_node = self.head
         string = ""
@@ -34,5 +45,6 @@ days.append("Thur")
 days.append("Fri")
 days.append("Sat")
 days.append("Sun")
+days.insert("Fri", 4)
 
 print(days)
