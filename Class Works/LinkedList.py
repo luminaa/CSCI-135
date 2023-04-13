@@ -29,10 +29,13 @@ class LinkedList:
         return head
     
     def remove(self, position, head=None):
+        if head is None:
+            head = self.head
         if position == 0:
-            self.head = self.head.next
+            head = head.next
         else:
-            self.remove(position-1, self.head.next)
+            head.next = self.remove(position-1, head.next)
+        return head
 
     def __str__(self): # string representation of the list
         current_node = self.head
