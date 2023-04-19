@@ -1,4 +1,4 @@
-from collections import deque
+from Deque import Deque as deque
 
 class Stack:
     def __init__(self):
@@ -29,7 +29,7 @@ class Queue:
         self.__data.append(item)
 
     def dequeue(self):
-        return self.__data.popleft()
+        return self.__data.pop_left()
 
     def get_size(self):
         return len(self.__data)
