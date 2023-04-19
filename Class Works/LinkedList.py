@@ -4,8 +4,11 @@ class Node:
         self.next = None # pointer to the next node in the list
 
 class LinkedList:
-    def __init__(self):
+    def __init__(self, lst=None):
         self.head = None # pointer to the first node in the list
+        if lst is not None:
+            for item in lst:
+                self.append(item)
 
     def append(self, data):
         new_node = Node(data) # create a new node with the given data
@@ -46,15 +49,10 @@ class LinkedList:
         return string
 
 
-days = LinkedList()
-days.append("Mon")
-days.append("Tue")
-days.append("Wed")
-days.append("Thur")
-days.append("Fri")
+days = LinkedList(["Mon", "Tue", "Wed", "Thu", "Thu"])
 days.append("Sat")
 days.append("Sun")
-days.insert("Fri", 4)
 days.remove(4)
+days.insert("Fri", 4)
 
 print(days)
