@@ -5,21 +5,27 @@ class Deque:
     def is_empty(self):
         return len(self.items) == 0
 
-    def add_front(self, item):
+    def append(self, item):
         self.items.append(item)
 
-    def add_rear(self, item):
+    def append_left(self, item):
         self.items.insert(0, item)
 
-    def remove_front(self):
+    def pop(self):
         if self.is_empty():
             return None
         return self.items.pop()
 
-    def remove_rear(self):
+    def pop_left(self):
         if self.is_empty():
             return None
         return self.items.pop(0)
 
     def size(self):
+        return len(self.items)
+
+    def __iter__(self):
+        return iter(self.items)
+    
+    def __len__(self):
         return len(self.items)
