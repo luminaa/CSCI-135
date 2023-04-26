@@ -53,7 +53,7 @@ class LinkedList:
 amtrak_stations = ['Union Station', 'New Carrollton', 'BWI', 'Baltimore', 'Wilmington Delaware', 'Philadelphia']
 amtrak = LinkedList(amtrak_stations)
 print(amtrak)
-amtrak.insert('Aberdeen', 4) # insert between Baltimore and Wilmington
+amtrak.insert('Aberdeen', 4) # insert between Baltimore and Wilmington Delaware
 print(amtrak)
 amtrak.remove(4) # remove Aberdeen
 print(amtrak)
