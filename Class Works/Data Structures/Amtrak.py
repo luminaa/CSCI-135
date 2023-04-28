@@ -31,6 +31,17 @@ class LinkedList:
             head.next = self.insert(data, position-1, head.next)
         return head
     
+    def insert_after(self, data, after, head=None):
+        if head is None:
+            head = self.head
+        if head.data == after:
+            new_node = Node(data)
+            new_node.next = head.next
+            head.next = new_node
+        else:
+            head.next = self.insert_after(data, after, head.next)
+        return head
+    
     def remove(self, position, head=None):
         if head is None:
             head = self.head
@@ -53,7 +64,8 @@ class LinkedList:
 amtrak_stations = ['Union Station', 'New Carrollton', 'BWI', 'Baltimore', 'Wilmington Delaware', 'Philadelphia']
 amtrak = LinkedList(amtrak_stations)
 print(amtrak)
-amtrak.insert('Aberdeen', 4) # insert between Baltimore and Wilmington Delaware
+amtrak.insert_after('Aberdeen', 'Baltimore') # insert Aberdeen after Baltimore
+# amtrak.insert('Aberdeen', 4) # insert Aberdeen at position 4 (after Baltimore)
 print(amtrak)
 amtrak.remove(4) # remove Aberdeen
 print(amtrak)
